@@ -20,9 +20,8 @@ var Spotify = require('node-spotify-api');
 var action = process.argv[2];
 var userInput = process.argv.splice(3).join(" ");
 
-
 // Create switch-case statement to direct which function gets run.
-
+function runCommand() {
 switch (action) {
     case "concert-this":
       concertThis();
@@ -40,7 +39,7 @@ switch (action) {
       whatItSays();
       break;
     }
-
+  }
 
 function concertThis() {
 
@@ -60,8 +59,8 @@ function concertThis() {
                 // Parse the body of the site and recover "Name of the venue", "Venue location", "Date of the Event"
                 console.log("Name of the venue: " + concerts[i].venue.name +
                             "\nVenue location: " + concerts[i].venue.city + ", " + 
-                                                 concerts[i].venue.region + ", " + 
-                                                 concerts[i].venue.country +
+                                                 (concerts[i].venue.region || 
+                                                 concerts[i].venue.country) +
                             "\nDate of the Event: " + moment(concerts[i].datetime).format("L"));
 
             }
@@ -74,18 +73,37 @@ function concertThis() {
 var spotify = new Spotify(keys.spotify);
 
 function spotifyThis() {
-  
-  spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+  if (!userInput) {
+    userInput = "The Sign";
+  }
+
+  spotify.search({ type: 'track', query: userInput }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-   
-  console.log(data); 
+
+  
+  var songs = data.tracks.items;
+  for (var i = 0; i < 5; i++) {
+    console.log("Song Name: " + songs[i].name);
+    console.log("Albumn Name: " + songs[i].album.name);
+    console.log("Preview URL: " + songs[i].preview_url);
+    var artists = songs[i].artists;
+    var artistName = [];
+    for (var j = 0; j < artists.length; j++) {
+      artistName.push(artists[j].name);
+    }
+    console.log("Artist: " + artistName.join(", "));
+ 
+  }
   });
 
   };
 
 function movieThis() {
+  if (!userInput) {
+    userInput = "Mr. Nobody";
+  }
 
   // Run request to the OMDB API with user input specified
   var movieQueryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
@@ -101,16 +119,38 @@ function movieThis() {
       var movies = JSON.parse(body);
 
               // Parse the body of the site and recover "Title", "Year came out", "IMDB Rating", 
-              //"Rotten Tomatoes Rating", "Country produced", "Language", "Plot", "Actors"
+              // "Rotten Tomatoes Rating", "Country produced", "Language", "Plot", "Actors"
               console.log("Title: " + movies.Title +
               "\nYear: " + movies.Year + 
               "\nIMDB Rating: " + movies.imdbRating + 
-              "\nRotten Tomatoes Rating: " + movies.Ratings[1].Value +
-              "\nCountry: " + movies.Country +
+              "\nCountry: " + movies.Country + 
               "\nLanguage: " + movies.Language +
               "\nPlot: " + movies.Plot +
               "\nActors: " + movies.Actors);
 
+              // Only show "Rotten Tomatoes Rating" when it's provided.
+              if (movies.Ratings[1]) {
+                console.log("Rotten Tomatoes Rating: " + movies.Ratings[1].Value);
+              } 
+
     } 
   });
 };  
+
+function whatItSays() {
+
+  fs.readFile("random.txt", "utf8", function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+  
+    // Break the string down by comma separation and store the contents into the output array.
+    var output = data.split(",");
+    action = output[0];
+    userInput = output[1];
+    runCommand();
+
+  
+  });
+}
+runCommand();
