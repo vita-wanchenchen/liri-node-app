@@ -75,16 +75,15 @@ var spotify = new Spotify(keys.spotify);
 
 function spotifyThis() {
   
-  spotify
-  .search({ type: 'track', query: userInput })
-  .then(function(response) {
-    console.log(response);
-  })
-  .catch(function(err) {
-    console.log(err);
+  spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+   
+  console.log(data); 
   });
 
-}
+  };
 
 function movieThis() {
 
@@ -106,7 +105,8 @@ function movieThis() {
               console.log("Title: " + movies.Title +
               "\nYear: " + movies.Year + 
               "\nIMDB Rating: " + movies.imdbRating + 
-              "\nRotten Tomatoes Rating: " + movies.Ratings[1].Value +
+              "\nRotten Tomatoes Rating: " + 
+              //movies.Ratings[1].Value +
               "\nCountry: " + movies.Country +
               "\nLanguage: " + movies.Language +
               "\nPlot: " + movies.Plot +
