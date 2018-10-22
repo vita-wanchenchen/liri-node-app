@@ -105,8 +105,7 @@ function movieThis() {
               console.log("Title: " + movies.Title +
               "\nYear: " + movies.Year + 
               "\nIMDB Rating: " + movies.imdbRating + 
-              "\nRotten Tomatoes Rating: " + 
-              //movies.Ratings[1].Value +
+              "\nRotten Tomatoes Rating: " + movies.Ratings[1].Value +
               "\nCountry: " + movies.Country +
               "\nLanguage: " + movies.Language +
               "\nPlot: " + movies.Plot +
