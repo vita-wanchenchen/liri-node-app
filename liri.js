@@ -7,6 +7,9 @@ var fs = require("fs");
 // Include the request npm package
 var request = require("request");
 
+// Include the moment npm package
+var moment = require("moment");
+
 // Access to Spotify key
 var keys = require("./keys.js");
 
@@ -59,7 +62,7 @@ function concertThis() {
                             "\nVenue location: " + concerts[i].venue.city + ", " + 
                                                  concerts[i].venue.region + ", " + 
                                                  concerts[i].venue.country +
-                            "\nDate of the Event: " + concerts[i].datetime);
+                            "\nDate of the Event: " + moment(concerts[i].datetime).format("L"));
 
             }
          
@@ -73,7 +76,7 @@ var spotify = new Spotify(keys.spotify);
 function spotifyThis() {
   
   spotify
-  .search({ type: 'track', query: 'All the Small Things' })
+  .search({ type: 'track', query: userInput })
   .then(function(response) {
     console.log(response);
   })
