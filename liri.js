@@ -22,7 +22,7 @@ var userInput = process.argv.splice(3).join(" ");
 
 // Create function for switch-case statement to direct which function gets run.
 function runCommand() {
-  
+
 switch (action) {
     case "concert-this":
       concertThis();
@@ -79,7 +79,7 @@ var spotify = new Spotify(keys.spotify);
 // Function to run the "spotify-this-song".
 function spotifyThis() {
 
-  // Setting defult search song "The Sign" when user didn't put a song name for using "spotify-this-song".
+  // Setting default search song "The Sign" when user didn't put a song name for using "spotify-this-song".
   if (!userInput) {
     userInput = "The Sign";
   }
