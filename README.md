@@ -1,6 +1,6 @@
 # liri-node-app
 
-LIRI is a app built with node.js will search the concert, movie, song and also texting command from text file.
+LIRI is a app built with node.js will search the concert, movie, song and also take command from text file.
 
 ## How to use LIRI
 
@@ -21,3 +21,10 @@ The default of this search without "movie name" will display the result of the m
 ### do-what-it-says
 
 This function will read the text from "random.txt" and run the search accrodingly.
+
+## NPM Package installed for this app:
+
+1. Node-Spotify-API (https://www.npmjs.com/package/node-spotify-api)
+2. Request (https://www.npmjs.com/package/request)
+3. Moment (https://www.npmjs.com/package/moment)
+4. DotEnv (https://www.npmjs.com/package/dotenv)
