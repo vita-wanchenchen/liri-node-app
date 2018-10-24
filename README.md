@@ -7,7 +7,7 @@ LIRI is a app built with node.js will search the concert, movie, song and also t
 
 ### concert-this + "artist/band name"
 
-Search result will included "Name of the venue", "Venue location", "Date of the Event".
+- Search result will included "Name of the venue", "Venue location", "Date of the Event".
 
 ### spotify-this-song + "song name"
 
